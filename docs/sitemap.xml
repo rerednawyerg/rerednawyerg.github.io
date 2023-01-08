@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://rerednawyerg.github.io/malware-analysis/</loc>
+    <lastmod>2023-01-08T15:18:05-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rerednawyerg.github.io/</loc>
+    <lastmod>2023-01-08T15:18:05-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rerednawyerg.github.io/malware-analysis/first_post/</loc>
+    <lastmod>2023-01-08T15:18:05-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://rerednawyerg.github.io/tags/about/</loc>
     <lastmod>2023-01-08T10:57:40-06:00</lastmod>
   </url>
@@ -14,11 +29,6 @@
   
   <url>
     <loc>https://rerednawyerg.github.io/posts/</loc>
-    <lastmod>2023-01-08T10:57:40-06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://rerednawyerg.github.io/</loc>
     <lastmod>2023-01-08T10:57:40-06:00</lastmod>
   </url>
   
