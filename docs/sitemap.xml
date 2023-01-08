@@ -3,7 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://rerednawyerg.github.io/posts/examplepost/</loc>
+    <loc>https://rerednawyerg.github.io/tags/about/</loc>
+    <lastmod>2023-01-08T10:57:40-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rerednawyerg.github.io/posts/firstpost/</loc>
     <lastmod>2023-01-08T10:57:40-06:00</lastmod>
   </url>
   
@@ -23,16 +28,7 @@
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/tags/untagged/</loc>
-    <lastmod>2023-01-08T10:57:40-06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://rerednawyerg.github.io/blog/</loc>
-  </url>
-  
-  <url>
-    <loc>https://rerednawyerg.github.io/series/</loc>
+    <loc>https://rerednawyerg.github.io/categories/</loc>
   </url>
   
 </urlset>
