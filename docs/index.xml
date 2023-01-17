@@ -6,10 +6,20 @@
     <description>Recent content on RE and Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Jan 2023 15:18:05 -0600</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jan 2023 15:57:49 -0600</lastBuildDate>
     
 	<atom:link href="https://rerednawyerg.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fake Updates - Part 1</title>
+      <link>https://rerednawyerg.github.io/malware-analysis/socgholish/</link>
+      <pubDate>Thu, 12 Jan 2023 15:57:49 -0600</pubDate>
+      
+      <guid>https://rerednawyerg.github.io/malware-analysis/socgholish/</guid>
+      <description>For my first attempt at malware analysis blogging, I wanted to go with something familiar. I&amp;rsquo;ve seen the &amp;ldquo;Fake Updates&amp;rdquo; or SocGholish breed of malware both at work and during personal research.
+One can find many useful, and far better, analysis on this malware from many fantastic researchers simply with light Googling. My intent is not to break new ground, but rather to get the hang of transcribing my thought process and methods in a succinct and understandable way &amp;ndash; once I&amp;rsquo;ve accomplished this, then I will begin to attempt to poke around in the unknown.</description>
+    </item>
     
     <item>
       <title>Vic Vinegar and Hugh Honey</title>
