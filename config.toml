@@ -1,10 +1,11 @@
 baseurl      = "https://rerednawyerg.github.io/"
-title        = "RE and Analysis from the ground up"
+title        = "RE and Analysis"
 languageCode = "en-us"
 theme        = "hello-friend-ng"
 publishDir = "docs"
 
 paginate = 5
+pluralizelisttitles = "false"
 
 [markup.goldmark.renderer]
 unsafe= true
