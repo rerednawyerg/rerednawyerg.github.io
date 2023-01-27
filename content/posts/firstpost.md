@@ -9,5 +9,6 @@ tags:
   - about
 ---
 
-I am an aspiring malware analyst/researcher. My intention for this blog is to create a place to post my attempts at RE and threat actor analysis. 
-It will likely be a disaster, but this seems to be a good way to document my progress. If others end up finding some value in it, then all the better.
+I am an aspiring malware analyst/researcher. My intention for this blog is to create a place to post my attempts at reverse engineering and malware analysis.  
+
+If you like the content, or want to correct any mistakes I may have made, feel free to contact me at mithrandir@defcon.social.
