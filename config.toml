@@ -55,7 +55,7 @@ unsafe= true
     # or
     #
     # path = "/img/your-example-logo.svg"
-    # alt = "Your example logo alt text"
+    # alt = "Your example logo alt"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
