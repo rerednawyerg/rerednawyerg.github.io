@@ -6,10 +6,19 @@
     <description>Recent content on RE and Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Jan 2023 15:57:49 -0600</lastBuildDate>
+    <lastBuildDate>Mon, 23 Jan 2023 19:47:27 -0600</lastBuildDate>
     
 	<atom:link href="https://rerednawyerg.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fake Updates - Part 2</title>
+      <link>https://rerednawyerg.github.io/malware-analysis/socgholish_part2/</link>
+      <pubDate>Mon, 23 Jan 2023 19:47:27 -0600</pubDate>
+      
+      <guid>https://rerednawyerg.github.io/malware-analysis/socgholish_part2/</guid>
+      <description>In the previous post, &amp;ldquo;Fake Updates - Part 1&amp;rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &amp;ldquo;update their browser&amp;rdquo;. I walked through the steps leading up to the download, and in this post will pick up where I left off and delve into the contents of the JavaScript payload.</description>
+    </item>
     
     <item>
       <title>Fake Updates - Part 1</title>
