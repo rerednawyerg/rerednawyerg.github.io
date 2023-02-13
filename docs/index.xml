@@ -17,7 +17,7 @@
       <pubDate>Mon, 23 Jan 2023 19:47:27 -0600</pubDate>
       
       <guid>https://rerednawyerg.github.io/malware-analysis/socgholish_part2/</guid>
-      <description>In the previous post, &amp;ldquo;Fake Updates - Part 1&amp;rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &amp;ldquo;update their browser&amp;rdquo;. I walked through the steps leading up to the download, and in this post will pick up where I left off and delve into the contents of the JavaScript payload.</description>
+      <description>In the previous post, &amp;ldquo;Fake Updates - Part 1&amp;rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &amp;ldquo;update their browser&amp;rdquo;.</description>
     </item>
     
     <item>
@@ -27,7 +27,7 @@
       
       <guid>https://rerednawyerg.github.io/malware-analysis/socgholish/</guid>
       <description>For my first attempt at malware analysis blogging, I wanted to go with something familiar. I&amp;rsquo;ve seen the &amp;ldquo;Fake Updates&amp;rdquo; or SocGholish breed of malware both at work and during personal research, so I decided to begin here.
-One can find many useful, and far better, analysis on this malware from many fantastic researchers simply with light Googling. My intent is not to break new ground, but rather to get the hang of transcribing my thought process and methods in a succinct and understandable way &amp;ndash; once I&amp;rsquo;ve accomplished this, then I will begin to attempt to poke around in the unknown.</description>
+One can find many useful, and far better, analysis on this malware from many fantastic researchers simply with light Googling.</description>
     </item>
     
     <item>
