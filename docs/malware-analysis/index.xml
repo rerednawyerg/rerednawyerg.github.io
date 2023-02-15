@@ -13,10 +13,10 @@
     
     <item>
       <title>Google Ad Leads To SectopRAT</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/temp/</link>
+      <link>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</link>
       <pubDate>Mon, 13 Feb 2023 06:53:30 -0600</pubDate>
       
-      <guid>https://rerednawyerg.github.io/malware-analysis/temp/</guid>
+      <guid>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</guid>
       <description>I wanted my first foray into reverse engineering to cover a malware sample from beginning to end - from initial download to the final payload. As I am just getting started on the RE learning journey, I also wanted to find a sample which wasn&amp;rsquo;t too difficult.</description>
     </item>
     
