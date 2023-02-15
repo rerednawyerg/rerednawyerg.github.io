@@ -11,4 +11,4 @@ tags:
 
 I am an aspiring malware analyst/researcher. My intention for this blog is to create a place to post my attempts at reverse engineering and malware analysis.  
 
-If you like the content, or want to correct any mistakes I may have made, feel free to contact me at mithrandir@defcon.social.
+If you like the content, or want to correct any mistakes I may have made, feel free to contact me at mithrandir@defcon.social or email me at rerednawyerg@gmail.com.

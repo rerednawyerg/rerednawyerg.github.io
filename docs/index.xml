@@ -6,10 +6,19 @@
     <description>Recent content on RE and Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Jan 2023 19:47:27 -0600</lastBuildDate>
+    <lastBuildDate>Mon, 13 Feb 2023 06:53:30 -0600</lastBuildDate>
     
 	<atom:link href="https://rerednawyerg.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Google Ad Leads To SectopRAT</title>
+      <link>https://rerednawyerg.github.io/malware-analysis/temp/</link>
+      <pubDate>Mon, 13 Feb 2023 06:53:30 -0600</pubDate>
+      
+      <guid>https://rerednawyerg.github.io/malware-analysis/temp/</guid>
+      <description>I wanted my first foray into reverse engineering to cover a malware sample from beginning to end - from initial download to the final payload. As I am just getting started on the RE learning journey, I also wanted to find a sample which wasn&amp;rsquo;t too difficult.</description>
+    </item>
     
     <item>
       <title>Fake Updates - Part 2</title>
@@ -36,8 +45,8 @@ One can find many useful, and far better, analysis on this malware from many fan
       <pubDate>Sun, 08 Jan 2023 15:18:05 -0600</pubDate>
       
       <guid>https://rerednawyerg.github.io/malware-analysis/first_post/</guid>
-      <description>Just getting started. You can catch more spam with honey than with vinegar.
-I&#39;m Hugh Honey and this is my partner, Vic Vinegar. We&#39;re partners in real estate and we&#39;re partners in life.  </description>
+      <description>Just getting started. You can catch more spam with honey than with vinegar. 
+ I&#39;m Hugh Honey and this is my partner, Vic Vinegar. We&#39;re partners in real estate and we&#39;re partners in life.  Embedding an email address in the page to collect some spam for my spamtrap.</description>
     </item>
     
     <item>
@@ -47,7 +56,7 @@ I&#39;m Hugh Honey and this is my partner, Vic Vinegar. We&#39;re partners in re
       
       <guid>https://rerednawyerg.github.io/posts/firstpost/</guid>
       <description>I am an aspiring malware analyst/researcher. My intention for this blog is to create a place to post my attempts at reverse engineering and malware analysis.
-If you like the content, or want to correct any mistakes I may have made, feel free to contact me at mithrandir@defcon.social.</description>
+If you like the content, or want to correct any mistakes I may have made, feel free to contact me at mithrandir@defcon.social or email me at rerednawyerg@gmail.com.</description>
     </item>
     
   </channel>
