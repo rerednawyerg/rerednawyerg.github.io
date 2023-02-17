@@ -12,13 +12,13 @@
     
     
     <item>
-      <title>Update On SectopRAT</title>
+      <title>SectopRAT Loader - Updates</title>
       <link>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</link>
       <pubDate>Thu, 16 Feb 2023 17:23:57 -0600</pubDate>
       
       <guid>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</guid>
-      <description>This will be a relatively short post, detailing some interesting new wrinkles I uncovered regarding the SectopRAT loader previously analyzed.
-As I mentioned, I was collecting screenshot content for my last blog post and I noticed an open directory on pputty[.]us. It seemed the threat actor had been adding new files, perhaps new methods of initial access.</description>
+      <description>This will be a relatively short writeup, detailing some interesting new wrinkles I uncovered regarding a SectopRAT loader.
+As I mentioned, I was collecting screenshots for my last blog post and I noticed an open directory on pputty[.]us. It seemed the threat actor had been adding new files, perhaps new methods of initial access.</description>
     </item>
     
     <item>
