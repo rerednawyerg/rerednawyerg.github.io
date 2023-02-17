@@ -18,7 +18,7 @@
       
       <guid>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</guid>
       <description>This will be a relatively short writeup, detailing some interesting new wrinkles I uncovered regarding a SectopRAT loader.
-As I mentioned, I was collecting screenshots for my last blog post and I noticed an open directory on pputty[.]us. It seemed the threat actor had been adding new files, perhaps new methods of initial access.</description>
+I was collecting screenshots for my last blog post when I noticed an open directory on pputty[.]us, the site to which a malicious Google ad pointed.</description>
     </item>
     
     <item>
