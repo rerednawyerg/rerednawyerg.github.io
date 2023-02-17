@@ -3,17 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</loc>
-    <lastmod>2023-02-13T06:53:30-06:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://rerednawyerg.github.io/malware-analysis/</loc>
-    <lastmod>2023-02-13T06:53:30-06:00</lastmod>
+    <lastmod>2023-02-16T17:23:57-06:00</lastmod>
   </url>
   
   <url>
     <loc>https://rerednawyerg.github.io/</loc>
+    <lastmod>2023-02-16T17:23:57-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</loc>
+    <lastmod>2023-02-16T17:23:57-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</loc>
     <lastmod>2023-02-13T06:53:30-06:00</lastmod>
   </url>
   
