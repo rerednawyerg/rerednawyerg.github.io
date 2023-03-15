@@ -71,6 +71,7 @@ The initial steps were quite simple, I visited YouTube, searched for &amp;ldquo;
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="/js/pswp-init.js"></script>
+
 <p>My latest writeup comes to us courtesy of YouTube, specifically via the plethora of videos claiming to share cracked versions of various software.</p>
 <p>The initial steps were quite simple, I visited YouTube, searched for &ldquo;cracked software&rdquo;, sorted by the last hour, and voila, hundreds of videos. I chose one near the top, titled <code>&quot;elden ring crack | free download | 2022&quot;</code>.</p>
 <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
@@ -623,6 +624,7 @@ I was collecting screenshots for my last blog post when I noticed an open direct
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="/js/pswp-init.js"></script>
+
 <p>This will be a relatively short writeup, detailing some interesting new wrinkles I uncovered regarding a SectopRAT loader.</p>
 <p>I was collecting screenshots for my last blog post when I noticed an open directory on <code>pputty[.]us</code>, the site to which a malicious Google ad pointed. It seemed the threat actor had been adding new files, perhaps new methods of initial access.</p>
 <p>Naturally, being curious, I pulled them all down to investigate.</p>
@@ -923,6 +925,7 @@ main;
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="/js/pswp-init.js"></script>
+
 <p>I wanted my first foray into reverse engineering to cover a malware sample from beginning to end - from initial download to the final payload. As I am just getting started on the RE learning journey, I also wanted to find a sample which wasn&rsquo;t too difficult. Lucky for me, it has been the season of malicious Google ads, and samples from a large variety of malware families have been easy to find.</p>
 <p>In this post, I will outline my process for working through this sample, the difficulties encountered, and the useful resources I found along the way.</p>
 <h3 id="malicious-google-ad">Malicious Google Ad</h3>
@@ -1383,6 +1386,7 @@ ScanScheduleDay : 8
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="/js/pswp-init.js"></script>
+
 In the previous post, &ldquo;Fake Updates - Part 1&rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &ldquo;update their browser&rdquo;. I walked through the steps leading up to the download, and in this post will pick up where I left off and delve into the contents of the JavaScript payload.</p>
 <hr>
 <h3 id="first-look-at-the-payload">First Look At The Payload</h3>
@@ -1634,6 +1638,7 @@ One can find many useful, and far better, analysis on this malware from many fan
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="/js/pswp-init.js"></script>
+
 For my first attempt at malware analysis blogging, I wanted to go with something familiar. I&rsquo;ve seen the &ldquo;Fake Updates&rdquo; or SocGholish breed of malware both at work and during personal research, so I decided to begin here.</p>
 <p>One can find many useful, and far better, analysis on this malware from many fantastic researchers simply with light Googling. My intent is not to break new ground, but rather to get the hang of transcribing my thought process and methods in a succinct and understandable way &ndash; once I&rsquo;ve accomplished this, then I will begin to attempt to poke around in the unknown.</p>
 <hr>
@@ -1891,8 +1896,7 @@ window.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e
             <pubDate>Sun, 08 Jan 2023 15:18:05 -0600</pubDate>
             
             <guid>https://rerednawyerg.github.io/posts/malwareanalysis/first_post/</guid>
-            <description>Just getting started. You can catch more spam with honey than with vinegar. 
- I&#39;m Hugh Honey and this is my partner, Vic Vinegar. We&#39;re partners in real estate and we&#39;re partners in life.  Embedding an email address in the page to collect some spam for my spamtrap.</description>
+            <description>Just getting started. You can catch more spam with honey than with vinegar.  I&#39;m Hugh Honey and this is my partner, Vic Vinegar. We&#39;re partners in real estate and we&#39;re partners in life.  Embedding an email address in the page to collect some spam for my spamtrap.</description>
             <content type="html"><![CDATA[<p>Just getting started.
 You can catch more spam with honey than with vinegar.
 
@@ -1948,7 +1952,8 @@ You can catch more spam with honey than with vinegar.
 
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script src="/js/pswp-init.js"></script></p>
+<script src="/js/pswp-init.js"></script>
+</p>
 <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
     <a href="images/hughhoney.png"  itemprop="contentUrl"> 
         <img itemprop="thumbnail"

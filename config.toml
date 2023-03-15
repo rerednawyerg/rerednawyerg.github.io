@@ -1,7 +1,7 @@
 baseurl      = "https://rerednawyerg.github.io/"
 title        = "Reverse Engineering and Analysis"
 languageCode = "en-us"
-theme        = "hugo-theme-hello-friend-ng"
+theme        = "hello-friend-ng"
 publishDir = "docs"
 
 paginate = 5
@@ -23,6 +23,9 @@ unsafe= true
 
   # Show reading time in minutes for posts
   showReadingTime = false
+  
+  enableSharingButtons = true
+  homeSubtitle = "Malware Investigation, Writeups, And Lessons Learned"
   
   disableReadOtherPosts = false
   
