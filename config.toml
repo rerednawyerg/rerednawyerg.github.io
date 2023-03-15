@@ -64,7 +64,7 @@ unsafe= true
     # lastModDisplay = "read more"
 
     [languages.en.params.logo]
-      logoText = "rerednawyerg"
+      logoText = "mithrandir"
       logoHomeLink = "/"
     # or
     #
