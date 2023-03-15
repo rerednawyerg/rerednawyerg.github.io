@@ -1,0 +1,107 @@
+baseurl      = "https://rerednawyerg.github.io/"
+title        = "Reverse Engineering and Analysis"
+languageCode = "en-us"
+theme        = "hello-friend-ng"
+publishDir = "docs"
+
+paginate = 5
+pluralizelisttitles = "false"
+
+[markup.goldmark.renderer]
+unsafe= true
+
+[params]
+  # dir name of your blog content (default is `content/posts`).
+  # the list of set content will show up on your index page (baseurl).
+  contentTypeName = "posts"
+
+  # OS theme is default when not provided, but you can force it to "light" or "dark"
+  defaultTheme = "light"
+
+  # if you set this to 0, only submenu trigger will be visible
+  showMenuItems = 2
+
+  # Show reading time in minutes for posts
+  showReadingTime = false
+  
+  disableReadOtherPosts = false
+  enableSharingButtons = true
+  
+  # Show table of contents at the top of your posts (defaults to false)
+  # Alternatively, add this param to post front matter for specific posts
+  # toc = true
+
+  # Show full page content in RSS feed items
+  #(default is Description or Summary metadata in the front matter)
+  # rssFullText = true
+  
+  homeSubtitle="Malware Investigations, Writeups, and Lessons Learned"
+  
+  [params.footer]
+    trademark = false
+    rss = false
+    copyright = false
+    author = true
+
+    topText = []
+    bottomText = [
+      "Written by <a href=\"https://github.com/rerednawyerg\">mithrandir</a>"
+    ]
+  
+  [[params.social]]
+	name = "twitter"
+	url = "https://twitter.com/rerednawyerg"
+  [[params.social]]
+	name = "mastodon"	
+	url = "https://defcon.social/@mithrandir"
+  [[params.social]]
+	name = "email"	
+	url = "mailto:rerednawyerg@gmail.com"
+
+
+[languages]
+  [languages.en]
+    title = "Reverse Engineering and Analysis"
+    subtitle = ""
+    keywords = ""
+    copyright = ""
+    menuMore = "Show more"
+    writtenBy = "Written by"
+    readMore = "Read more"
+    readOtherPosts = "Read other posts"
+    newerPosts = "Newer posts"
+    olderPosts = "Older posts"
+    minuteReadingTime = "min read"
+    dateFormatSingle = "2006-01-02"
+    dateFormatList = "2006-01-02"
+    # leave empty to disable, enter display text to enable
+    lastModDisplay = "read more"
+
+    [languages.en.params.logo]
+      logoText = "mithrandir"
+      logoHomeLink = "/"
+    # or
+    #
+    # path = "/img/your-example-logo.svg"
+    # alt = "Your example logo alt"
+
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "blog"
+        name = "About"
+        url = "posts"
+      [[languages.en.menu.main]]
+        identifier = "ma"
+        name = "Malware Analysis"
+        url = "/MalwareAnalysis"
+	  [[languages.en.menu.main]]
+        identifier = "Things I've Learned"
+        name = "TIL"
+        url = "til"
+		
+	  [[menu.main]]
+		identifier = "twitter"
+	  [[menu.main]]
+	    identifier = "mastodon"
+      [[menu.main]]
+	    identifier = "email"

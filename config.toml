@@ -1,7 +1,7 @@
 baseurl      = "https://rerednawyerg.github.io/"
 title        = "Reverse Engineering and Analysis"
 languageCode = "en-us"
-theme        = "hello-friend-ng"
+theme        = "hugo-theme-hello-friend-ng"
 publishDir = "docs"
 
 paginate = 5
@@ -44,7 +44,10 @@ unsafe= true
 	name = "email"	
 	url = "mailto:rerednawyerg@gmail.com"
 
-
+   [params.shareButtons]
+     size = "small"
+	 icon = "solid"
+     networks = ["facebook", "twitter", "reddit", "linkedin","hackernews"]
 [languages]
   [languages.en]
     title = "Reverse Engineering and Analysis"
@@ -74,12 +77,12 @@ unsafe= true
     [languages.en.menu]
       [[languages.en.menu.main]]
         identifier = "blog"
-        name = "About"
-        url = "posts"
-      [[languages.en.menu.main]]
-        identifier = "ma"
         name = "Malware Analysis"
-        url = "/MalwareAnalysis"
+        url = "/posts"
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "firstpost"
 		
 	  [[menu.main]]
 		identifier = "twitter"

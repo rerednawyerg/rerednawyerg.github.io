@@ -3,42 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://rerednawyerg.github.io/malwareanalysis/</loc>
+    <loc>https://rerednawyerg.github.io/posts/</loc>
     <lastmod>2023-03-14T14:35:27-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/malwareanalysis/raccoon_stealer_youtube/</loc>
+    <loc>https://rerednawyerg.github.io/posts/malwareanalysis/raccoon_stealer_youtube/</loc>
     <lastmod>2023-03-14T14:35:27-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/</loc>
-    <lastmod>2023-03-14T14:35:27-06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://rerednawyerg.github.io/malwareanalysis/gad_sectoprat_update/</loc>
+    <loc>https://rerednawyerg.github.io/posts/malwareanalysis/gad_sectoprat_update/</loc>
     <lastmod>2023-02-16T17:23:57-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/malwareanalysis/gad_sectoprat/</loc>
+    <loc>https://rerednawyerg.github.io/posts/malwareanalysis/gad_sectoprat/</loc>
     <lastmod>2023-02-13T06:53:30-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/malwareanalysis/socgholish_part2/</loc>
+    <loc>https://rerednawyerg.github.io/posts/malwareanalysis/socgholish_part2/</loc>
     <lastmod>2023-01-23T19:47:27-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/malwareanalysis/socgholish/</loc>
+    <loc>https://rerednawyerg.github.io/posts/malwareanalysis/socgholish/</loc>
     <lastmod>2023-01-12T15:57:49-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/malwareanalysis/first_post/</loc>
+    <loc>https://rerednawyerg.github.io/posts/malwareanalysis/first_post/</loc>
     <lastmod>2023-01-08T15:18:05-06:00</lastmod>
   </url>
   
@@ -48,12 +43,17 @@
   </url>
   
   <url>
+    <loc>https://rerednawyerg.github.io/firstpost/</loc>
+    <lastmod>2023-01-08T10:57:40-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://rerednawyerg.github.io/posts/firstpost/</loc>
     <lastmod>2023-01-08T10:57:40-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rerednawyerg.github.io/posts/</loc>
+    <loc>https://rerednawyerg.github.io/</loc>
     <lastmod>2023-01-08T10:57:40-06:00</lastmod>
   </url>
   
