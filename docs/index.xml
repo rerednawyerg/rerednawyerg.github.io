@@ -13,52 +13,12 @@
     
     <item>
       <title>Raccoons Nesting In .NET</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/raccoon_stealer_youtube/</link>
-      <pubDate>Mon, 13 Mar 2023 19:35:27 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/raccoon_stealer_youtube/</guid>
-      <description>My latest writeup comes to us courtesy of YouTube, specifically via the plethora of videos claiming to share cracked versions of various software.
-The initial steps were quite simple, I visited YouTube, searched for &amp;ldquo;cracked software&amp;rdquo;, sorted by the last hour, and voila, hundreds of videos.</description>
-    </item>
-    
-    <item>
-      <title>Raccoons Nesting In .NET</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/raccoon_stealer_youtube/</link>
-      <pubDate>Mon, 13 Mar 2023 19:35:27 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/raccoon_stealer_youtube/</guid>
-      <description>My latest writeup comes to us courtesy of YouTube, specifically via the plethora of videos claiming to share cracked versions of various software.
-The initial steps were quite simple, I visited YouTube, searched for &amp;ldquo;cracked software&amp;rdquo;, sorted by the last hour, and voila, hundreds of videos.</description>
-    </item>
-    
-    <item>
-      <title>Raccoons Nesting In .NET</title>
       <link>https://rerednawyerg.github.io/malwareanalysis/raccoon_stealer_youtube/</link>
       <pubDate>Mon, 13 Mar 2023 19:35:27 -0600</pubDate>
       
       <guid>https://rerednawyerg.github.io/malwareanalysis/raccoon_stealer_youtube/</guid>
       <description>My latest writeup comes to us courtesy of YouTube, specifically via the plethora of videos claiming to share cracked versions of various software.
 The initial steps were quite simple, I visited YouTube, searched for &amp;ldquo;cracked software&amp;rdquo;, sorted by the last hour, and voila, hundreds of videos.</description>
-    </item>
-    
-    <item>
-      <title>SectopRAT Loader - Updates</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</link>
-      <pubDate>Thu, 16 Feb 2023 17:23:57 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</guid>
-      <description>This will be a relatively short writeup, detailing some interesting new wrinkles I uncovered regarding a SectopRAT loader.
-I was collecting screenshots for my last blog post when I noticed an open directory on pputty[.]us, the site to which a malicious Google ad pointed.</description>
-    </item>
-    
-    <item>
-      <title>SectopRAT Loader - Updates</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</link>
-      <pubDate>Thu, 16 Feb 2023 17:23:57 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat_update/</guid>
-      <description>This will be a relatively short writeup, detailing some interesting new wrinkles I uncovered regarding a SectopRAT loader.
-I was collecting screenshots for my last blog post when I noticed an open directory on pputty[.]us, the site to which a malicious Google ad pointed.</description>
     </item>
     
     <item>
@@ -73,47 +33,11 @@ I was collecting screenshots for my last blog post when I noticed an open direct
     
     <item>
       <title>Google Ad Leads To SectopRAT</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</link>
-      <pubDate>Mon, 13 Feb 2023 06:53:30 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</guid>
-      <description>I wanted my first foray into reverse engineering to cover a malware sample from beginning to end - from initial download to the final payload. As I am just getting started on the RE learning journey, I also wanted to find a sample which wasn&amp;rsquo;t too difficult.</description>
-    </item>
-    
-    <item>
-      <title>Google Ad Leads To SectopRAT</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</link>
-      <pubDate>Mon, 13 Feb 2023 06:53:30 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/gad_sectoprat/</guid>
-      <description>I wanted my first foray into reverse engineering to cover a malware sample from beginning to end - from initial download to the final payload. As I am just getting started on the RE learning journey, I also wanted to find a sample which wasn&amp;rsquo;t too difficult.</description>
-    </item>
-    
-    <item>
-      <title>Google Ad Leads To SectopRAT</title>
       <link>https://rerednawyerg.github.io/malwareanalysis/gad_sectoprat/</link>
       <pubDate>Mon, 13 Feb 2023 06:53:30 -0600</pubDate>
       
       <guid>https://rerednawyerg.github.io/malwareanalysis/gad_sectoprat/</guid>
       <description>I wanted my first foray into reverse engineering to cover a malware sample from beginning to end - from initial download to the final payload. As I am just getting started on the RE learning journey, I also wanted to find a sample which wasn&amp;rsquo;t too difficult.</description>
-    </item>
-    
-    <item>
-      <title>Fake Updates - Part 2</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/socgholish_part2/</link>
-      <pubDate>Mon, 23 Jan 2023 19:47:27 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/socgholish_part2/</guid>
-      <description>In the previous post, &amp;ldquo;Fake Updates - Part 1&amp;rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &amp;ldquo;update their browser&amp;rdquo;.</description>
-    </item>
-    
-    <item>
-      <title>Fake Updates - Part 2</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/socgholish_part2/</link>
-      <pubDate>Mon, 23 Jan 2023 19:47:27 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/socgholish_part2/</guid>
-      <description>In the previous post, &amp;ldquo;Fake Updates - Part 1&amp;rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &amp;ldquo;update their browser&amp;rdquo;.</description>
     </item>
     
     <item>
@@ -127,52 +51,12 @@ I was collecting screenshots for my last blog post when I noticed an open direct
     
     <item>
       <title>Fake Updates - Part 1</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/socgholish/</link>
-      <pubDate>Thu, 12 Jan 2023 15:57:49 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/socgholish/</guid>
-      <description>For my first attempt at malware analysis blogging, I wanted to go with something familiar. I&amp;rsquo;ve seen the &amp;ldquo;Fake Updates&amp;rdquo; or SocGholish breed of malware both at work and during personal research, so I decided to begin here.
-One can find many useful, and far better, analysis on this malware from many fantastic researchers simply with light Googling.</description>
-    </item>
-    
-    <item>
-      <title>Fake Updates - Part 1</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/socgholish/</link>
-      <pubDate>Thu, 12 Jan 2023 15:57:49 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/socgholish/</guid>
-      <description>For my first attempt at malware analysis blogging, I wanted to go with something familiar. I&amp;rsquo;ve seen the &amp;ldquo;Fake Updates&amp;rdquo; or SocGholish breed of malware both at work and during personal research, so I decided to begin here.
-One can find many useful, and far better, analysis on this malware from many fantastic researchers simply with light Googling.</description>
-    </item>
-    
-    <item>
-      <title>Fake Updates - Part 1</title>
       <link>https://rerednawyerg.github.io/malwareanalysis/socgholish/</link>
       <pubDate>Thu, 12 Jan 2023 15:57:49 -0600</pubDate>
       
       <guid>https://rerednawyerg.github.io/malwareanalysis/socgholish/</guid>
       <description>For my first attempt at malware analysis blogging, I wanted to go with something familiar. I&amp;rsquo;ve seen the &amp;ldquo;Fake Updates&amp;rdquo; or SocGholish breed of malware both at work and during personal research, so I decided to begin here.
 One can find many useful, and far better, analysis on this malware from many fantastic researchers simply with light Googling.</description>
-    </item>
-    
-    <item>
-      <title>Vic Vinegar and Hugh Honey</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/first_post/</link>
-      <pubDate>Sun, 08 Jan 2023 15:18:05 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/first_post/</guid>
-      <description>Just getting started. You can catch more spam with honey than with vinegar. 
- I&#39;m Hugh Honey and this is my partner, Vic Vinegar. We&#39;re partners in real estate and we&#39;re partners in life.  Embedding an email address in the page to collect some spam for my spamtrap.</description>
-    </item>
-    
-    <item>
-      <title>Vic Vinegar and Hugh Honey</title>
-      <link>https://rerednawyerg.github.io/malware-analysis/first_post/</link>
-      <pubDate>Sun, 08 Jan 2023 15:18:05 -0600</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/malware-analysis/first_post/</guid>
-      <description>Just getting started. You can catch more spam with honey than with vinegar. 
- I&#39;m Hugh Honey and this is my partner, Vic Vinegar. We&#39;re partners in real estate and we&#39;re partners in life.  Embedding an email address in the page to collect some spam for my spamtrap.</description>
     </item>
     
     <item>
