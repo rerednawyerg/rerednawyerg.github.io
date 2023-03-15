@@ -1,5 +1,5 @@
 baseurl      = "https://rerednawyerg.github.io/"
-title        = "RE and Analysis"
+title        = "Reverse Engineering and Analysis"
 languageCode = "en-us"
 theme        = "hello-friend-ng"
 publishDir = "docs"
@@ -47,8 +47,8 @@ unsafe= true
 
 [languages]
   [languages.en]
-    title = "RE and Analysis"
-    subtitle = ""
+    title = "Reverse Engineering and Analysis"
+    subtitle = "Reverse Engineering and Analysis"
     keywords = ""
     copyright = ""
     menuMore = "Show more"
@@ -61,7 +61,7 @@ unsafe= true
     dateFormatSingle = "2006-01-02"
     dateFormatList = "2006-01-02"
     # leave empty to disable, enter display text to enable
-    # lastModDisplay = "read more"
+    lastModDisplay = "read more"
 
     [languages.en.params.logo]
       logoText = "mithrandir"
@@ -79,7 +79,7 @@ unsafe= true
       [[languages.en.menu.main]]
         identifier = "ma"
         name = "Malware Analysis"
-        url = "/malware-analysis"
+        url = "/MalwareAnalysis"
 		
 	  [[menu.main]]
 		identifier = "twitter"

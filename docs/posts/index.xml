@@ -1,8 +1,8 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Posts on RE and Analysis</title>
+        <title>Posts on Reverse Engineering and Analysis</title>
         <link>https://rerednawyerg.github.io/posts/</link>
-        <description>Recent content in Posts on RE and Analysis</description>
+        <description>Recent content in Posts on Reverse Engineering and Analysis</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Sun, 08 Jan 2023 10:57:40 -0600</lastBuildDate>
