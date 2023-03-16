@@ -1969,18 +1969,5 @@ You can catch more spam with honey than with vinegar.
 Embedding an email address in the page to collect some spam for my spamtrap.]]></content>
         </item>
         
-        <item>
-            <title>About Me</title>
-            <link>https://rerednawyerg.github.io/posts/firstpost/</link>
-            <pubDate>Sun, 08 Jan 2023 10:57:40 -0600</pubDate>
-            
-            <guid>https://rerednawyerg.github.io/posts/firstpost/</guid>
-            <description>I am an aspiring malware analyst/researcher. My intention for this blog is to create a place to post my attempts at reverse engineering and malware analysis.
-If you like the content, or want to correct any mistakes I may have made, feel free to contact me at mithrandir@defcon.social or email me at rerednawyerg@gmail.com.</description>
-            <content type="html"><![CDATA[<p>I am an aspiring malware analyst/researcher. My intention for this blog is to create a place to post my attempts at reverse engineering and malware analysis.</p>
-<p>If you like the content, or want to correct any mistakes I may have made, feel free to contact me at <a href="mailto:mithrandir@defcon.social">mithrandir@defcon.social</a> or email me at <a href="mailto:rerednawyerg@gmail.com">rerednawyerg@gmail.com</a>.</p>
-]]></content>
-        </item>
-        
     </channel>
 </rss>
