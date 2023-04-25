@@ -459,7 +459,7 @@ On a guess, I tried using Cyberchef with one of the base64 encoded strings and t
     
 </figure>
 For fun, I decided to make a Python string decryption script, since the RC4 key and the base64 string are just sitting in the <code>.rdata</code> section. The script can be found <a href="https://gist.github.com/rerednawyerg/6b6ff1ee6ed701f656e235a6d9cd460f">here, on my Github</a>.</p>
-<p>Running the script, I extracted all the decrypted strings and added them to <a href="https://pastebin.com/">Pastebin</a>.</p>
+<p>Running the script, I extracted all the decrypted strings and added them to <a href="https://pastebin.com/T0g7Laf0">Pastebin</a>.</p>
 <h3 id="identification">Identification</h3>
 <p>Now it&rsquo;s time to try and identify the sample. Googling one of the strings (<code>&quot;Country: ISO?&quot;</code>) found in the <code>AppLaunch.exe</code>'s memory, I came across a fantastic blog post from <a href="https://blog.sekoia.io/stealc-a-copycat-of-vidar-and-raccoon-infostealers-gaining-in-popularity-part-1/">Sekoia.io</a>, describing a newly observed info-stealer called &ldquo;Stealc&rdquo;.</p>
 <p>The technical analysis portion of the blog lines up exactly with the activity I have seen in this sample, so I can safely conclude the malware is in fact, the &ldquo;Stealc&rdquo; information stealer.</p>
