@@ -22,16 +22,6 @@ On April 19th, a search for &amp;ldquo;IP Scanner&amp;rdquo; resulted in a suspi
     </item>
     
     <item>
-      <title>MSIX AwesomeMiner</title>
-      <link>https://rerednawyerg.github.io/posts/malwareanalysis/msix_awesomeminer/</link>
-      <pubDate>Thu, 16 Mar 2023 08:27:19 -0500</pubDate>
-      
-      <guid>https://rerednawyerg.github.io/posts/malwareanalysis/msix_awesomeminer/</guid>
-      <description>As has been widely reported in the security industry, Google searches resulting in malicious ads were incredibly prolific during late 2022 and early 2023. This activity has reduced significantly in recent weeks, but it isn&amp;rsquo;t quite dead yet.
-A search for &amp;ldquo;Awesome Miner&amp;rdquo; resulted in a suspicious advertisement displaying above the legitimate Awesome Miner site.</description>
-    </item>
-    
-    <item>
       <title>Raccoons Nesting In .NET</title>
       <link>https://rerednawyerg.github.io/posts/malwareanalysis/raccoon_stealer_youtube/</link>
       <pubDate>Tue, 14 Mar 2023 14:35:27 -0600</pubDate>
