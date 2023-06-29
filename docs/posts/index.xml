@@ -342,18 +342,18 @@ $alphanumeric = (<span style="color:#e6db74">&#39;abcdefghijklmnopqrstuvwxyz0123
 </ul>
 <p>This data is organized in a hashtable, converted to JSON, and then Gzip compressed. The compressed data is converted to a byte array and sent to the C2 via the SSL stream.</p>
 <h3 id="c2-server-response">C2 Server Response</h3>
-<p>Once the C2 responds, the beacon parses the request. If it determines there are commands to be executed, it passes the response to another function, which I&rsquo;ve named <code>perform_c2_command</code>.</p>
+<p>Once the C2 responds, the beacon parses the response. If it determines there are commands to be executed, it passes the response to another function, which I&rsquo;ve named <code>perform_c2_command</code>.</p>
 <p>The function will Gzip decompress the response, and convert it from JSON into a hashtable.</p>
 <p>Then, the value of the <code>Packet</code> key in the hashtable is passed to a switch statement, and different actions are performed.</p>
-<p>All responses to the C2 are gzipped and sent over the SSL stream.
-Valid switch statement values:</p>
-<pre><code class="language-String" data-lang="String">wdnkbajgcmqx - sends a global count variable back to the C2.
+<p>Valid switch statement values:</p>
+<pre><code class="language-String" data-lang="String">&lt;random_string&gt; - sends a global count variable back to the C2.
 plugin - stores an argument string for a DLL sent by the C2 into a global variable
 iex - converts contents of the hashtable's `script` key from base64 and passes it to IEX
 cmd - calls start-process using the values of the hashtable's `cmd` and `args` keys as parameters
 selfdelete - performs &quot;remove-item $PWD\* -force -recurse exit&quot;
 savePlugin - passes a base64 encoded .NET assembly to the &quot;run_dll&quot; function
-</code></pre><p>The <code>run_dll</code> function mentioned above takes the base64 encoded byte array, reflectively loads it, and creates an instance of the specified type.</p>
+</code></pre><p>All responses to the C2 commands are gzipped and sent back over the SSL stream.</p>
+<p>The <code>run_dll</code> function mentioned above takes the base64 encoded byte array, reflectively loads it, and creates an instance of the specified type.</p>
 <p>It then calls the <code>Run</code> method on the instance with the following arguments:</p>
 <pre><code class="language-String" data-lang="String">$plugin_instance.(('Run'))(
 [customclass1]::tcp_socket, 
